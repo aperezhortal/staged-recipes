@@ -1,0 +1,68 @@
+{% set name = "pysteps" %}
+  {% set version = "1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+# TODO: Once the V1.0.0 is released and uploaded to pypi, update this section.
+source:
+  url: https://test-files.pythonhosted.org/packages/5f/05/912696108a49094416f501e532cb49991f56c7c38db74bd05178e518383a/pysteps-1.0.0.tar.gz
+  # If getting the source from GitHub remove the line above
+  # uncomment the line below and modify as needed
+  # url: https://github.com/simplejson/{{ name }}/archive/{{ version }}.tar.gz
+  sha256: 5dac056361281dccb042ce7353a19a7027bb228ebe70ee202bc14b102d62c7b5
+
+build:
+  number: 0
+  # Note: --no-deps is currently required due to https://github.com/conda/conda-build/issues/3254
+  skip: True  # [py<36]"
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+
+requirements:
+  build:
+    - numpy
+    - cython
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - python
+    - numpy
+    - cython
+    - attrdict
+    - jsmin
+    - scipy
+    - matplotlib
+    - jsonschema
+  run:
+    - python
+    - attrdict
+    - jsmin
+    - jsonschema
+    - matplotlib
+    - netCDF4
+    - numpy
+    - opencv
+    - pillow
+    - pyproj
+    - scipy
+
+test:
+  imports:
+    - pysteps
+
+about:
+  home: https://pysteps.github.io/
+  license: BSD 3-Clause License
+  license_family: BSD
+  summary: 'Python framework for short-term ensemble prediction systems'
+  license_file: LICENSE
+  description: |
+    pySTEPS is a community-driven initiative for developing and maintaining an easy
+    to use, modular, free and open-source Python framework for short-term ensemble
+    prediction systems.
+
+    The focus is on probabilistic nowcasting of radar precipitation fields,
+    but pySTEPS is designed to allow a wider range of uses.
+  doc_url: https://pysteps.readthedocs.io/
+  dev_url: https://github.com/pySTEPS/pysteps
